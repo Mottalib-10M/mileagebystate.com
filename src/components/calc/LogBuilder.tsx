@@ -28,7 +28,7 @@ export default function LogBuilder({ methodHref }: { methodHref: string }) {
   const cell = 'h-12 w-full rounded-lg border border-navy-300 bg-white px-2 text-sm text-navy-900 focus:border-accent-500 focus:outline-none';
   return (
     <div className="rechner rounded-xl border border-navy-200 bg-white p-4 sm:p-6">
-      <div className="relative overflow-x-auto"><table className="journal w-full min-w-[640px] text-sm">
+      <form onSubmit={(e) => e.preventDefault()}><div className="relative overflow-x-auto"><table className="journal w-full min-w-[640px] text-sm">
         <thead><tr><th scope="col" className="px-1 py-1 text-left">Date</th><th scope="col" className="px-1 py-1 text-left">Business purpose</th><th scope="col" className="px-1 py-1 text-left">From and to</th><th scope="col" className="px-1 py-1 text-right">Miles</th><th scope="col" className="px-1 py-1 text-right">Value</th><th scope="col" className="sr-only">Remove</th></tr></thead>
         <tbody>{lines.map((l, i) => (
           <tr key={i}>
@@ -39,7 +39,7 @@ export default function LogBuilder({ methodHref }: { methodHref: string }) {
             <td className="tabular-nums px-1 py-1 text-right">{usd(l.miles * r(l.date))}</td>
             <td className="px-1 py-1 text-right"><button type="button" onClick={() => setLines((ls) => ls.filter((_, j) => j !== i))} className="rounded border border-navy-300 px-2 py-1 text-xs text-navy-700 hover:bg-navy-50" aria-label={`Remove line ${i + 1}`}>Remove</button></td>
           </tr>))}</tbody>
-      </table></div>
+      </table></div></form>
       <div className="mt-3 flex flex-wrap gap-2 text-sm">
         <button type="button" onClick={() => setLines((ls) => [...ls, { date: ls[ls.length - 1]?.date ?? '2026-07-01', purpose: '', route: '', miles: 0 }])} className="rounded-lg border border-accent-600 bg-accent-600 px-3 py-1.5 font-medium text-white hover:bg-accent-700">Add a trip</button>
         <button type="button" onClick={csv} className="rounded-lg border border-navy-300 bg-white px-3 py-1.5 font-medium text-navy-800 hover:bg-navy-50">Download CSV</button>

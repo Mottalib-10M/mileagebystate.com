@@ -47,7 +47,7 @@ export default function RatesLookup({ d27 = -1, d26 = -1, label = 'Standard CONU
       <form className="grid gap-x-5 gap-y-4 sm:grid-cols-[1fr_auto]" onSubmit={(e) => e.preventDefault()}>
         <div className="relative grid grid-rows-subgrid row-span-3 content-start gap-y-0">
           <label htmlFor={`${p}-q`} className="mb-1 block text-sm font-medium text-navy-700">City, county, GSA area or ZIP code</label>
-          <input id={`${p}-q`} type="search" autoComplete="off" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={pick.label}
+          <input id={`${p}-q`} type="text" role="combobox" aria-autocomplete="list" aria-expanded={hits.length > 0} autoComplete="off" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={pick.label}
             className="h-12 w-full rounded-lg border border-navy-300 bg-white px-4 text-navy-900 placeholder:text-navy-700 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/20" />
           <p className="mt-1 text-xs text-navy-500">Try “Denver”, “Miami-Dade”, “Sedona AZ” or “20001”</p>
           {hits.length > 0 && (

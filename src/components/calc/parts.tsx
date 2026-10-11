@@ -1,5 +1,5 @@
 /** Shared pieces of the calculators: card, result ledger, rows, date field, share and print actions. */
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { formatMoney, formatNumber } from '../../lib/format';
 
 export const usd = (n: number, d = 0) => formatMoney(Number.isFinite(n) ? n : 0, d);
@@ -11,11 +11,15 @@ export const rate = (n: number) => (Math.round(n * 1000) % 10 ? usd(n, 3) : usd(
 export const dayLabel = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
 export interface Opt { value: string; label: string }
 
-export function Card({ children, form, cols = 2 }: { children: ReactNode; form: ReactNode; cols?: 2 | 3 }) {
+/**
+ * Calculator card. From lg up, fields on the left and the result on the right, so the question and the
+ * answer share the first screen (RECETTE §5, rule of 2026-10-11). Below lg, the result follows the fields.
+ */
+export function Card({ children, form }: { children: ReactNode; form: ReactNode; cols?: 2 | 3 }) {
   return (
-    <div className="rechner rounded-xl border border-navy-200 bg-white p-4 sm:p-6">
-      <form className={`grid gap-x-5 gap-y-4 sm:grid-cols-2 ${cols === 3 ? 'lg:grid-cols-3' : ''}`} onSubmit={(e) => e.preventDefault()}>{form}</form>
-      {children}
+    <div className="rechner rounded-xl border border-navy-200 bg-white p-4 sm:p-6 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-6">
+      <form className="grid gap-x-5 gap-y-4 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>{form}</form>
+      <div className="lg:sticky lg:top-20 lg:[&>[data-resultat]]:mt-0">{children}</div>
     </div>
   );
 }
@@ -31,13 +35,36 @@ export function DateField({ id, label, value, onChange, min, max, help }: { id: 
   );
 }
 
+/**
+ * Result block, marked data-resultat. On a phone, while the calculator is on screen but its figure is not,
+ * a bar fixed to the bottom shows the figure and scrolls to the details on tap (RECETTE §5).
+ */
 export function Result({ label, figure, sub, children }: { label: string; figure: string; sub?: ReactNode; children?: ReactNode }) {
+  const box = useRef<HTMLDivElement>(null);
+  const fig = useRef<HTMLParagraphElement>(null);
+  const [bar, setBar] = useState(false);
+  useEffect(() => {
+    const card = box.current?.closest('.rechner');
+    if (!fig.current || !card || typeof IntersectionObserver === 'undefined') return;
+    let cardIn = false, figIn = true;
+    const o = new IntersectionObserver((es) => {
+      for (const e of es) { if (e.target === card) cardIn = e.isIntersecting; else figIn = e.isIntersecting; }
+      setBar(cardIn && !figIn);
+    });
+    o.observe(card); o.observe(fig.current);
+    return () => o.disconnect();
+  }, []);
   return (
-    <div aria-live="polite" className="mt-6 rounded-xl bg-accent-50 p-4 sm:p-5">
+    <div ref={box} data-resultat aria-live="polite" className="mt-6 rounded-xl bg-accent-50 p-4 sm:p-5">
       <p className="text-sm font-medium text-navy-700">{label}</p>
-      <p className="tabular-nums mt-1 text-4xl font-bold text-navy-900">{figure}</p>
+      <p ref={fig} className="tabular-nums mt-1 text-4xl font-bold text-navy-900">{figure}</p>
       {sub && <p className="ledger-range mt-1 text-sm">{sub}</p>}
       {children}
+      <button type="button" onClick={() => box.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })} aria-hidden={!bar} tabIndex={bar ? 0 : -1}
+        className={`${bar ? 'flex' : 'hidden'} fixed inset-x-0 bottom-0 z-30 items-center justify-between gap-3 border-t border-navy-200 bg-white px-4 py-2 text-left shadow-[0_-2px_8px_rgba(0,0,0,0.08)] lg:hidden`}>
+        <span className="min-w-0 truncate text-xs text-navy-700">{label}</span>
+        <span className="tabular-nums shrink-0 text-xl font-bold text-navy-900">{figure}</span>
+      </button>
     </div>
   );
 }

@@ -84,7 +84,7 @@ export default function TripCalc({ mode = 'trip', dest = STD, methodHref, idPref
     <Card form={<>
       <div className="relative sm:col-span-2">
         <label htmlFor={`${p}-q`} className="mb-1 block text-sm font-medium text-navy-700">Destination: city, county, GSA area or ZIP</label>
-        <input id={`${p}-q`} type="search" autoComplete="off" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={pick.label}
+        <input id={`${p}-q`} type="text" role="combobox" aria-autocomplete="list" aria-expanded={hits.length > 0} autoComplete="off" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={pick.label}
           className="h-12 w-full rounded-lg border border-navy-300 bg-white px-4 text-navy-900 placeholder:text-navy-700 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/20" aria-describedby={`${p}-q-help`} />
         <p id={`${p}-q-help`} className="mt-1 text-xs text-navy-500">Selected: <strong className="text-navy-800">{pick.label}</strong> · {areaNow}</p>
         {hits.length > 0 && (

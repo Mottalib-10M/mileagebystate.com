@@ -51,7 +51,7 @@ export default function FuelCalc({ mode = 'fuel', state = 'texas', methodHref, i
     <Card cols={3} form={<>
       <NumberField id={`${p}-mi`} label={mode === 'fuel' ? 'Trip distance' : 'Total driving distance'} value={miles} onChange={setMiles} unit="mi" max={20000} />
       <Toggle id={`${p}-rt`} label="Distance is" value={round} onChange={setRound} options={[{ value: '0', label: 'Total' }, { value: '1', label: 'One way ×2' }]} />
-      <SelectField id={`${p}-st`} label="Where you fill up" value={st} onChange={setSt} options={STATES.map((s) => ({ value: s.slug, label: s.name }))} help={`EIA, week of ${week}: ${rate(eia)}/gal (${fuel === 'diesel' ? S.dieselArea : S.gasArea})`} />
+      <SelectField id={`${p}-st`} label="Where you fill up" className="sm:col-span-2" value={st} onChange={setSt} options={STATES.map((s) => ({ value: s.slug, label: s.name }))} help={`EIA, week of ${week}: ${rate(eia)}/gal (${fuel === 'diesel' ? S.dieselArea : S.gasArea})`} />
       <SelectField id={`${p}-car`} label="Vehicle (EPA combined MPG)" value={car} onChange={setCar} options={CARS} />
       {!preset && <NumberField id={`${p}-mpg`} label="Your MPG" value={mpg} onChange={setMpg} unit="mpg" max={150} decimals={1} />}
       <Toggle id={`${p}-f`} label="Fuel" value={fuel} onChange={setFuel} options={[{ value: 'gas', label: 'Regular' }, { value: 'diesel', label: 'Diesel' }]} />
