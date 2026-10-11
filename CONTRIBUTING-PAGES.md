@@ -1,4 +1,4 @@
-# Écrire ou étoffer une page de « Trip Expense Ledger » (us-travel-expenses)
+# Écrire ou étoffer une page de « Mileage by State » (mileagebystate.com)
 
 Notice pour les agents qui écrivent ou prolongent le site. À lire en entier avant d'écrire, avec
 `~/Documents/GitHub/RECETTE-SITE.md` (§0, §6, §6.5, §7, §9, §9.3, §11, §17.4, §21, §26).
@@ -132,7 +132,7 @@ page officielle lue.
 ## Contrôles
 
 ```bash
-cd ~/Documents/GitHub/a-publier/Mottalib-10M/us-travel-expenses
+cd ~/Documents/GitHub/a-publier/Mottalib-10M/mileagebystate.com
 ALLOW_PLANNED=1 PAGE_FILES=state:texas,irs-mileage-rate npx vitest run tests/pages.test.ts   # vos pages
 npx vitest run                                                                              # tout (sans ALLOW_PLANNED à la fin)
 export NODE_PATH=$(npm root -g):$PWD/node_modules

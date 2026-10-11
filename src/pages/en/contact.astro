@@ -6,9 +6,9 @@ import { route } from '../../i18n/routes';
 import { contactPageSchema } from '../../lib/seo';
 const lang = 'en';
 const path = route('contact', lang);
-const description = 'Write to the publisher of Trip Expense Ledger about a per diem rate, a mileage figure or a calculator result. We check rates against GSA and IRS releases; we do not review vouchers.';
+const description = 'Write to the publisher of Mileage by State about a per diem rate, a mileage figure or a calculator result. We check rates against GSA and IRS releases; we do not review vouchers.';
 ---
-<PageLayout title="Contact Trip Expense Ledger: rate corrections and embed questions" description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path, lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+<PageLayout title="Contact Mileage by State: rate corrections and embed questions" description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path, lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
   <div class="prose prose-slate max-w-none prose-headings:font-serif">
     <h1>Contact</h1>
     <p>E-mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. There is no form: nothing about your trip needs to reach us for the calculators to work.</p>

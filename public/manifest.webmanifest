@@ -1,6 +1,6 @@
 {
- "name": "Trip Expense Ledger",
- "short_name": "Trip Expense Ledger",
+ "name": "Mileage by State",
+ "short_name": "Mileage by State",
  "description": "Per diem, mileage and fuel calculators for U.S. business trips: GSA FY2027 lodging and M&IE, the 75% travel days, IRS 76-cent mileage since July 2026.",
  "start_url": "/en/",
  "display": "standalone",

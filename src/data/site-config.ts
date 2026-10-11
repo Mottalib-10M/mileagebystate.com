@@ -1,6 +1,6 @@
 /** Configuration centrale du site (générée par new-site.py). */
-export const SITE_URL = "https://us-travel-expenses.example";
-export const SITE_NAMES: Record<string, string> = {"en": "Trip Expense Ledger"};
+export const SITE_URL = "https://mileagebystate.com";
+export const SITE_NAMES: Record<string, string> = {"en": "Mileage by State"};
 export const LANG_TAGS: Record<string, string> = {"en": "en-US"};
 export const OG_LOCALES: Record<string, string> = {"en": "en_US"};
 export const LOCALE_TAG = 'en-US';
@@ -16,7 +16,7 @@ export const AUTHOR_DESC: Record<string, string> = {"en": "Radif Partners builds
  *  themes reellement traites par le site, pas une liste de mots-cles : un sujet
  *  declare ici sans page qui le couvre est une declaration fausse. */
 export const KNOWS_ABOUT: Record<string, string[]> = {"en": ["GSA per diem rates", "Meals and incidental expenses (M&IE)", "IRS standard mileage rates", "Accountable plan reimbursement", "Fuel and EV charging costs", "Vehicle cost per mile"]};
-export const CONTACT_EMAIL = "contact@us-travel-expenses.example";
+export const CONTACT_EMAIL = "contact@mileagebystate.com";
 export const THEME_COLOR = '#2B3A67';
 export const LOGO_SYMBOL = 'MI';
 export const BING_VERIFY_CODE = '';

@@ -12,7 +12,7 @@
  "volumesNote": "384 881 recherches/mois estimées (30 requêtes, bornes basses 121 710) : GO volume, validé par l'éditeur le 2026-10-11.",
  "folder": "us-travel-expenses",
  "outDir": "a-publier/Mottalib-10M",
- "url": "https://us-travel-expenses.example",
+ "url": "https://mileagebystate.com",
  "locales": [
   "en"
  ],
@@ -36,7 +36,7 @@
  "authorDesc": {
   "en": "Radif Partners builds this site from the files the federal government publishes for travel: the GSA per diem tables for fiscal years 2026 and 2027 with their monthly lodging maximums, the meal breakdown and the day rules of the Federal Travel Regulation, the IRS mileage rates of January and July 2026, EIA fuel and electricity prices and EPA vehicle consumption. Each trip is added up in your browser, line by line, with the rule that produced every amount."
  },
- "email": "contact@us-travel-expenses.example",
+ "email": "contact@mileagebystate.com",
  "indexnow": "7c2e9a41b5d84f03a6e1c8b29d7f5a30",
  "shortName": "Trip Expense Ledger",
  "description": "Per diem, mileage and fuel calculators for U.S. business trips: GSA FY2027 lodging and M&IE, the 75% travel days, IRS 76-cent mileage since July 2026.",

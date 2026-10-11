@@ -7,12 +7,12 @@ import { KIT as K } from '../../lib/kit';
 import { profilePageSchema, breadcrumbSchema } from '../../lib/seo';
 const lang = 'en';
 const path = route('about', lang);
-const title = 'Per Diem Data 2026: Who Builds Trip Expense Ledger';
-const description = 'Trip Expense Ledger is published by Radif Partners: free 2026 per diem, mileage and fuel calculators built on GSA, IRS, EIA and EPA files, no account.';
+const title = 'Per Diem Data 2026: Who Builds Mileage by State and Why';
+const description = 'Mileage by State is published by Radif Partners: free 2026 per diem, mileage and fuel calculators built on GSA, IRS, EIA and EPA files, no account needed.';
 ---
 <PageLayout title={title} description={description} lang={lang} jsonLd={[profilePageSchema({ path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'About', path }])]} breadcrumbs={[{ label: 'About' }]}>
   <article class="prose prose-slate max-w-none prose-headings:font-serif">
-    <h1>About Trip Expense Ledger</h1>
+    <h1>About Mileage by State</h1>
     <p>{AUTHOR_DESC.en}</p>
     <h2>Why this site exists</h2>
     <p>Filling in a travel voucher should not take three browser tabs: the GSA lookup for the lodging cap, a second page for the meal breakdown, a third for the mileage rate, then a spreadsheet to apply the 75% rule and subtract the conference lunch. This site does better than the first Google result for per diem and mileage searches because it computes the full reimbursement of a trip in one screen, with the GSA FY2027 tables and the IRS rate of {K.centsWord(K.irs('2026-07-01'))} in force since July 1, 2026, where gsa.gov gives one rate per city and leaves the trip, the provided meals and the miles to the traveler.</p>
