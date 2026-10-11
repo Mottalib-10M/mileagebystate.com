@@ -1,0 +1,362 @@
+{
+  "_lisezmoi": "Every rule and rate the engine applies, read on the official source named in `sources`, on the date in retrieved_at. Rates by city live in perdiem.json (rebuilt by scripts/build-data.py from the GSA files). Never type one of these values in a page: read it from here.",
+  "year": 2026,
+  "retrieved_at": "2026-10-11",
+  "valid_from": "2026-01-01",
+  "valid_to": "2027-09-30",
+  "fiscalYears": {
+    "2026": {
+      "start": "2025-10-01",
+      "end": "2026-09-30",
+      "nsa": 296,
+      "standard": {
+        "lodging": 110,
+        "mie": 68
+      },
+      "zipPublished": "2025-08-14"
+    },
+    "2027": {
+      "start": "2026-10-01",
+      "end": "2027-09-30",
+      "nsa": 295,
+      "standard": {
+        "lodging": 113,
+        "mie": 68
+      },
+      "zipPublished": "2026-09-03",
+      "leftNsa": "Allentown, PA"
+    }
+  },
+  "mie": {
+    "partialDayShare": 0.75,
+    "travelMinHours": 12,
+    "tiersRevisedFy": 2025,
+    "tiersNextReviewFy": 2028,
+    "tiers": [
+      68,
+      74,
+      80,
+      86,
+      92
+    ],
+    "oconusSplitAbove": 265,
+    "oconusSplit": {
+      "breakfast": 0.15,
+      "lunch": 0.25,
+      "dinner": 0.4
+    },
+    "actualExpenseCap": 3,
+    "mealReceiptAbove": 75,
+    "breakdown": {
+      "68": [
+        16,
+        19,
+        28,
+        5
+      ],
+      "74": [
+        18,
+        20,
+        31,
+        5
+      ],
+      "80": [
+        20,
+        22,
+        33,
+        5
+      ],
+      "86": [
+        22,
+        23,
+        36,
+        5
+      ],
+      "92": [
+        23,
+        26,
+        38,
+        5
+      ]
+    },
+    "_breakdownOrder": "breakfast, lunch, dinner, incidentals (GSA M&IE breakdown, FY2025 to present)"
+  },
+  "mileage": {
+    "irs": [
+      {
+        "from": "2026-07-01",
+        "to": "2026-12-31",
+        "business": 0.76,
+        "medical": 0.235,
+        "moving": 0.235,
+        "charity": 0.14,
+        "source": "irs_ann_2026_11"
+      },
+      {
+        "from": "2026-01-01",
+        "to": "2026-06-30",
+        "business": 0.725,
+        "medical": 0.205,
+        "moving": 0.205,
+        "charity": 0.14,
+        "source": "irs_notice_2026_10"
+      },
+      {
+        "from": "2025-01-01",
+        "to": "2025-12-31",
+        "business": 0.7,
+        "medical": 0.21,
+        "moving": 0.21,
+        "charity": 0.14,
+        "source": "irs_rates_page"
+      }
+    ],
+    "history": [
+      [
+        "2026 (July 1 – Dec. 31)",
+        76,
+        14,
+        23.5,
+        "IR-2026-29 / Announcement 2026-11"
+      ],
+      [
+        "2026 (Jan. 1 – June 30)",
+        72.5,
+        14,
+        20.5,
+        "IR-2025-128 / Notice 2026-10"
+      ],
+      [
+        "2025",
+        70,
+        14,
+        21,
+        "IR-2024-312"
+      ],
+      [
+        "2024",
+        67,
+        14,
+        21,
+        "IR-2023-239"
+      ],
+      [
+        "2023",
+        65.5,
+        14,
+        22,
+        "IR-2022-234"
+      ],
+      [
+        "July 1 – Dec. 31, 2022",
+        62.5,
+        14,
+        22,
+        "IR-2022-124"
+      ],
+      [
+        "Jan. 1 – June 30, 2022",
+        58.5,
+        14,
+        18,
+        "IR-2021-251"
+      ],
+      [
+        "2021",
+        56,
+        14,
+        16,
+        "IR-2020-279"
+      ],
+      [
+        "2020",
+        57.5,
+        14,
+        17,
+        "IR-2019-215"
+      ],
+      [
+        "2019",
+        58,
+        14,
+        20,
+        "IR-2018-251"
+      ],
+      [
+        "2018",
+        54.5,
+        14,
+        18,
+        "IR-2017-204"
+      ]
+    ],
+    "gsaPov": [
+      {
+        "from": "2026-07-01",
+        "automobile": 0.76,
+        "govCarAvailable": 0.235,
+        "motorcycle": 0.74,
+        "airplane": 1.935,
+        "relocation": 0.235
+      },
+      {
+        "from": "2026-01-01",
+        "automobile": 0.725,
+        "govCarAvailable": 0.205,
+        "motorcycle": 0.705,
+        "airplane": 1.78
+      }
+    ],
+    "depreciationCents": {
+      "2022": 26,
+      "2023": 28,
+      "2024": 30,
+      "2025": 33,
+      "2026": 35
+    },
+    "favrMaxCost": 61700,
+    "fleetMaxFmv": 61700,
+    "midYearReason": "recent increases in the price of fuel"
+  },
+  "highLow": {
+    "2027": {
+      "from": "2026-10-01",
+      "high": 329,
+      "low": 230,
+      "mieHigh": 86,
+      "mieLow": 74,
+      "threshold": 280,
+      "notice": "Notice 2026-60"
+    },
+    "2026": {
+      "from": "2025-10-01",
+      "high": 319,
+      "low": 225,
+      "mieHigh": 86,
+      "mieLow": 74,
+      "threshold": 272,
+      "notice": "Notice 2025-54"
+    }
+  },
+  "transportation": {
+    "conus": 80,
+    "oconus": 86,
+    "incidentalsOnly": 5,
+    "hoursOfServiceDeductible": 0.8,
+    "mealsDeductible": 0.5
+  },
+  "medical": {
+    "agiFloor": 0.075
+  },
+  "sources": {
+    "gsa_rates": {
+      "url": "https://www.gsa.gov/travel/plan-a-trip/per-diem-rates",
+      "label": "GSA, Per diem rates lookup (FY 2027 current from October 1, 2026)"
+    },
+    "gsa_files": {
+      "url": "https://www.gsa.gov/travel/plan-book/per-diem-rates/per-diem-files",
+      "label": "GSA, Per diem files: FY 2026 and FY 2027 rates and ZIP code files (FY 2027 ZIP file published September 3, 2026)"
+    },
+    "gsa_highlights": {
+      "url": "https://www.gsa.gov/system/files/FY2027perdiemhighlights.docx",
+      "label": "GSA, FY 2027 per diem highlights: standard rate $181 ($113 lodging, $68 M&IE), 295 non-standard areas"
+    },
+    "gsa_mie": {
+      "url": "https://www.gsa.gov/travel/plan-a-trip/per-diem-rates/mie-breakdowns",
+      "label": "GSA, M&IE breakdowns (CONUS tiers $68 to $92, OCONUS allocation table)"
+    },
+    "ftr_301_11": {
+      "url": "https://www.ecfr.gov/current/title-41/part-301-11",
+      "label": "41 CFR part 301-11 (Federal Travel Regulation, subsistence expenses, as revised by FTR Case 2025-05, 90 FR 56893, December 8, 2025): § 301-11.20 and § 301-11.21"
+    },
+    "gsa_pov": {
+      "url": "https://www.gsa.gov/travel/plan-a-trip/transportation-airfare-rates-pov-rates/pov-mileage-reimbursement",
+      "label": "GSA, Privately owned vehicle mileage reimbursement rates (current rates effective July 1, 2026)"
+    },
+    "irs_rates_page": {
+      "url": "https://www.irs.gov/tax-professionals/standard-mileage-rates",
+      "label": "IRS, Standard mileage rates, all years (cents per mile)"
+    },
+    "irs_ann_2026_11": {
+      "url": "https://www.irs.gov/irb/2026-29_irb",
+      "label": "IRS, Internal Revenue Bulletin 2026-29 (July 13, 2026), Announcement 2026-11: 76 cents business, 23.5 cents medical and moving from July 1, 2026"
+    },
+    "irs_notice_2026_10": {
+      "url": "https://www.irs.gov/irb/2026-04_irb",
+      "label": "IRS, Internal Revenue Bulletin 2026-4, Notice 2026-10: 2026 standard mileage rates, 35-cent depreciation component, $61,700 FAVR limit"
+    },
+    "irs_ir_2025_128": {
+      "url": "https://www.irs.gov/newsroom/irs-sets-2026-business-standard-mileage-rate-at-725-cents-per-mile-up-25-cents",
+      "label": "IRS, IR-2025-128 (December 29, 2025): 2026 business standard mileage rate at 72.5 cents"
+    },
+    "irs_notice_2026_60": {
+      "url": "https://www.irs.gov/pub/irs-drop/n-26-60.pdf",
+      "label": "IRS, Notice 2026-60: 2026-2027 special per diem rates (high-low $329 and $230, transportation industry $80 and $86)"
+    },
+    "irs_notice_2025_54": {
+      "url": "https://www.irs.gov/pub/irs-drop/n-25-54.pdf",
+      "label": "IRS, Notice 2025-54: 2025-2026 special per diem rates (high-low $319 and $225)"
+    },
+    "irs_rp_2019_48": {
+      "url": "https://www.irs.gov/pub/irs-drop/rp-19-48.pdf",
+      "label": "IRS, Rev. Proc. 2019-48: rules for substantiating travel expenses with per diem rates (partial days, section 6.04)"
+    },
+    "irs_rp_2019_46": {
+      "url": "https://www.irs.gov/pub/irs-drop/rp-19-46.pdf",
+      "label": "IRS, Rev. Proc. 2019-46: rules for the standard mileage rates and FAVR allowances"
+    },
+    "irs_pub_463": {
+      "url": "https://www.irs.gov/pub/irs-pdf/p463.pdf",
+      "label": "IRS, Publication 463 (2025), Travel, Gift, and Car Expenses (accountable plans, 80% limit for hours-of-service workers)"
+    },
+    "irs_pub_502": {
+      "url": "https://www.irs.gov/publications/p502",
+      "label": "IRS, Publication 502, Medical and Dental Expenses (transportation, 7.5% of AGI floor)"
+    },
+    "irs_pub_526": {
+      "url": "https://www.irs.gov/publications/p526",
+      "label": "IRS, Publication 526, Charitable Contributions (car expenses at 14 cents a mile)"
+    },
+    "irs_pub_15b": {
+      "url": "https://www.irs.gov/publications/p15b",
+      "label": "IRS, Publication 15-B, Employer's Tax Guide to Fringe Benefits (vehicle allowances)"
+    },
+    "ecfr_1_62_2": {
+      "url": "https://www.ecfr.gov/current/title-26/section-1.62-2",
+      "label": "26 CFR 1.62-2, Reimbursements and other expense allowance arrangements (accountable plans)"
+    },
+    "state_foreign": {
+      "url": "https://aoprals.state.gov/web920/per_diem.asp",
+      "label": "U.S. Department of State, Foreign per diem rates by location"
+    },
+    "dtmo_oconus": {
+      "url": "https://www.travel.dod.mil/Travel-Transportation-Rates/Per-Diem/Per-Diem-Rate-Lookup/",
+      "label": "Defense Travel Management Office, per diem rate lookup (Alaska, Hawaii, U.S. territories and possessions)"
+    },
+    "eia_gas": {
+      "url": "https://www.eia.gov/petroleum/gasdiesel/",
+      "label": "EIA, Gasoline and Diesel Fuel Update (weekly retail prices by region and selected states)"
+    },
+    "eia_epm": {
+      "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_b",
+      "label": "EIA, Electric Power Monthly, Table 5.6.B, average residential price by state, year to date through July 2026"
+    },
+    "epa_fueleconomy": {
+      "url": "https://www.fueleconomy.gov/feg/download.shtml",
+      "label": "EPA and DOE, fueleconomy.gov vehicle data (combined MPG, kWh/100 mi and range)"
+    },
+    "census_places": {
+      "url": "https://www.census.gov/data/tables/time-series/demo/popest/2020s-total-cities-and-towns.html",
+      "label": "Census Bureau, City and town population totals, Vintage 2024, with the 2020 place-by-county relationship file"
+    },
+    "irs_pub_15": {
+      "url": "https://www.irs.gov/publications/p15",
+      "label": "IRS, Publication 15 (Circular E), Employer's Tax Guide: Social Security 6.2% and Medicare 1.45% employee rates"
+    }
+  },
+  "payroll": {
+    "employeeShare": 0.0765,
+    "socialSecurity": 0.062,
+    "medicare": 0.0145
+  }
+}

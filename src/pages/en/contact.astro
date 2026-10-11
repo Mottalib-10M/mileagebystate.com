@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { contactPageSchema } from '../../lib/seo';
+const lang = 'en';
+const path = route('contact', lang);
+const description = 'Write to the publisher of Trip Expense Ledger about a per diem rate, a mileage figure or a calculator result. We check rates against GSA and IRS releases; we do not review vouchers.';
+---
+<PageLayout title="Contact Trip Expense Ledger: rate corrections and embed questions" description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path, lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none prose-headings:font-serif">
+    <h1>Contact</h1>
+    <p>E-mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. There is no form: nothing about your trip needs to reach us for the calculators to work.</p>
+    <h2>Useful to send</h2>
+    <ul>
+      <li>A rate that differs from the GSA lookup or the IRS page: paste the share link of the calculator and name the date of travel.</li>
+      <li>A city or ZIP code the search places in the wrong area.</li>
+      <li>A question about embedding the trip calculator on an intranet or a travel office page: read the <a href={route('widget', lang)}>embed page</a> first.</li>
+    </ul>
+    <h2>What we cannot do</h2>
+    <p>We cannot say what your employer or agency will pay, approve an actual expense claim or prepare a tax return. The <a href={route('method', lang)}>method page</a> explains each rule so that you can check a voucher yourself.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+  </div>
+</PageLayout>

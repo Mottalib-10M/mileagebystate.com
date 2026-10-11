@@ -1,0 +1,27 @@
+---
+/** Renders the calculator of a page as a hydrated island. `dest` preselects a GSA area (state pages). */
+import TripCalc from './calc/TripCalc';
+import RatesLookup from './calc/RatesLookup';
+import MileageCalc from './calc/MileageCalc';
+import LogBuilder from './calc/LogBuilder';
+import FuelCalc from './calc/FuelCalc';
+import EvCalc from './calc/EvCalc';
+import CarCostCalc from './calc/CarCostCalc';
+import TaxCalc from './calc/TaxCalc';
+import { route } from '../i18n/routes';
+import type { ToolKind } from '../lib/page-types';
+interface Props { kind: ToolKind; dest?: { label: string; detail: string; d27: number; d26: number }; state?: string; stateAbbr?: string; idPrefix?: string; methodHref?: string }
+const { kind, dest, state, stateAbbr, idPrefix, methodHref = route('method', 'en') } = Astro.props;
+const pre = idPrefix ?? kind.slice(0, 5);
+const carModes = { cpm: 'cpm', depreciation: 'depreciation', tco: 'tco', allowance: 'allowance', deduction: 'deduction' } as const;
+const taxModes = { meals: 'meals', firstlast: 'firstlast', highlow: 'highlow', driver: 'driver', medical: 'medical', excess: 'excess', oconus: 'oconus' } as const;
+const miModes = { 'irs-rate': 'rate', reimb: 'reimb', odometer: 'odometer' } as const;
+---
+{(kind === 'trip' || kind === 'perdiem') && <TripCalc client:load mode={kind} dest={dest} methodHref={methodHref} idPrefix={pre} />}
+{kind === 'rates' && <RatesLookup client:load d27={dest?.d27} d26={dest?.d26} label={dest?.label} state={stateAbbr} methodHref={methodHref} idPrefix={pre} />}
+{kind in miModes && <MileageCalc client:load mode={miModes[kind as keyof typeof miModes]} methodHref={methodHref} idPrefix={pre} />}
+{kind === 'log' && <LogBuilder client:load methodHref={methodHref} />}
+{(kind === 'fuel' || kind === 'roadtrip') && <FuelCalc client:load mode={kind} state={state} methodHref={methodHref} idPrefix={pre} />}
+{(kind === 'ev' || kind === 'tesla' || kind === 'compare') && <EvCalc client:load mode={kind} state={state} methodHref={methodHref} idPrefix={pre} />}
+{kind in carModes && <CarCostCalc client:load mode={carModes[kind as keyof typeof carModes]} methodHref={methodHref} idPrefix={pre} />}
+{kind in taxModes && <TaxCalc client:load mode={taxModes[kind as keyof typeof taxModes]} methodHref={methodHref} idPrefix={pre} />}

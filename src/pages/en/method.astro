@@ -1,0 +1,60 @@
+---
+/** Method: every rule the calculators apply, its source, the reference tests, the limits. Figures from the kit. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route } from '../../i18n/routes';
+import { KIT as K } from '../../lib/kit';
+import { SOURCES, table } from '../../lib/helpers';
+import { destIndex, T } from '../../lib/data';
+import { breadcrumbSchema, webPageSchema } from '../../lib/seo';
+const lang = 'en';
+const path = route('method', lang);
+const src = (k: string, t?: string) => `<a href="${SOURCES[k].url}" target="_blank" rel="nofollow noopener noreferrer">${t ?? SOURCES[k].label}</a>`;
+const s27 = K.std(2027), s26 = K.std(2026);
+const share = K.P.mie.partialDayShare;
+const tierRows = K.P.mie.tiers.map((m) => { const t = K.tier(m); return [K.usd(m), K.usd(t.breakfast), K.usd(t.lunch), K.usd(t.dinner), K.usd(t.incidentals), K.usd(m * share, 2)]; });
+const mileRows = K.P.mileage.history.map((r) => [String(r[0]), `${K.num(Number(r[1]), 1)}¢`, `${K.num(Number(r[2]), 0)}¢`, `${K.num(Number(r[3]), 1)}¢`, String(r[4])]);
+const gs = destIndex('AL', 'Gulf Shores');
+const ex = K.trip({ destIndex: gs, depart: '2027-05-30', ret: '2027-06-02', mealsOnTravelDays: { breakfast: 0, lunch: 0, dinner: 1 }, meals: { breakfast: 0, lunch: 1, dinner: 0 } });
+const exRows = ex.days.map((d) => [K.day(d.date), d.lodging ? K.usd(d.lodging) : '–', K.usd(d.mie), K.pct(d.share), d.deduction ? K.usd(d.deduction, 2) : '–', K.usd(d.mieNet, 2)]);
+const title = 'Per Diem Rules 2026-27: GSA, FTR and IRS Mileage Method';
+const description = 'How each amount is computed in 2026-27: GSA monthly lodging, the FTR 75% days and meal deductions, IRS mileage by date, EIA and EPA figures, and the tests.';
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: 'Rules and data', description, path, lang }), breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Rules and data', path }])]} breadcrumbs={[{ label: 'Rules and data' }]}>
+  <article class="prose prose-slate max-w-none prose-headings:font-serif">
+    <h1>Rules and data behind each amount</h1>
+    <p>Nothing on this site is an estimate of what travel costs: it is the federal rule applied to the dates and places you enter. This page lists each rule, the text it comes from, how the code applies it, the official figures the tests compare against, and what the tools leave out.</p>
+    <h2>1. GSA rates: two fiscal years, twelve months, every ZIP code</h2>
+    <p>The <Fragment set:html={src('gsa_files', 'GSA per diem files')} /> are downloaded as published: the FY2026 ZIP file (August 14, 2025), the FY2027 ZIP file (September 3, 2026) and the two rate files that give each area's counties. A script keeps, for every non-standard area, the twelve monthly lodging maximums (October to September) and the M&IE rate, for both years: {K.T.dest.length} records. The standard CONUS rate is {K.usd(s27.lodging)} + {K.usd(s27.mie)} in FY2027 and was {K.usd(s26.lodging)} + {K.usd(s26.mie)} in FY2026. GSA lists the Washington, DC area under the District, Maryland and Virginia: the three records carry the same rates.</p>
+    <p>Search by city uses the Census Bureau's <Fragment set:html={src('census_places', 'Vintage 2024 population estimates and the 2020 place-by-county file')} />: {K.num(K.PLACE_COUNT)} cities of 15,000 people or more are placed in their main county, then in the GSA area that holds most of that county's ZIP codes (Edwards Air Force Base has Kern County ZIP codes in the Los Angeles area; Kern County itself is the Bakersfield area). Areas defined by city limits (Santa Monica, Sedona, Falmouth) match the city name. A ZIP code split between two areas takes the non-standard one, as the GSA lookup does. {K.num(K.ZIP_COUNT)} ZIP codes are searchable.</p>
+    <h2>2. The day rules of the Federal Travel Regulation</h2>
+    <p>The <Fragment set:html={src('ftr_301_11', 'subsistence part of the FTR')} /> was rewritten by FTR Case 2025-05 (90 FR 56893, December 8, 2025); the sections cited below are the new ones.</p>
+    <ul>
+      <li><strong>Eligibility</strong> (§ 301-11.1): official travel away from the official station, in travel status for more than {K.P.mie.travelMinHours} hours.</li>
+      <li><strong>Lodging</strong> (§ 301-11.19): actual cost up to the maximum. Each night takes the maximum of its own month and fiscal year. Lodging taxes are reimbursed apart (§ 301-11.16) and have their own field.</li>
+      <li><strong>M&IE</strong> (§ 301-11.20): {K.pct(share)} on the day of departure and the last day; 100% on full days; one day of more than 12 and less than 24 hours: {K.pct(share)}.</li>
+      <li><strong>Provided meals</strong> (§ 301-11.21): the GSA breakdown amount is deducted; on the first and last day the full amount comes off the reduced rate; deductions never leave less than the incidental expenses; meals from a common carrier or a free hotel meal are not deducted.</li>
+    </ul>
+    <Fragment set:html={table(['M&IE', 'Breakfast', 'Lunch', 'Dinner', 'Incidentals', `First and last day (${K.pct(share)})`], tierRows, 'GSA M&IE breakdown, valid from FY2025; tiers unchanged in FY2027 and due for review in FY2028.', ['r', 'r', 'r', 'r', 'r', 'r'])} />
+    <h3>Worked example: Gulf Shores, Alabama, May 30 to June 2, 2027</h3>
+    <p>Three nights straddle a season change: May at {K.usd(K.rateOn(gs, '2027-05-30').lodging)}, June at {K.usd(K.rateOn(gs, '2027-06-01').lodging)}. A conference dinner on the arrival day and a lunch on the next day are provided. The calculator gives {K.usd(ex.lodging)} of lodging and {K.usd(ex.mie, 2)} of M&IE, {K.usd(ex.total, 2)} in all:</p>
+    <Fragment set:html={table(['Day', 'Lodging', 'M&IE rate', 'Share', 'Meals off', 'M&IE paid'], exRows, 'Computed by the site engine from the GSA FY2027 file.', ['l', 'r', 'r', 'r', 'r', 'r'])} />
+    <h2>3. Mileage</h2>
+    <p>IRS business, medical, moving and charity rates come from <Fragment set:html={src('irs_notice_2026_10', 'Notice 2026-10')} /> (January 1 to June 30, 2026) and <Fragment set:html={src('irs_ann_2026_11', 'Announcement 2026-11')} /> (from July 1, 2026, "{K.P.mileage.midYearReason}"). A mile takes the rate of the day it was driven; the trip calculator uses the departure date. Federal POV rates come from <Fragment set:html={src('gsa_pov', 'GSA')} />: {K.usd(K.pov('2026-07-01'), 2)} for a car, {K.usd(K.pov('2026-07-01', 'govCarAvailable'), 3)} when a government car was available. The depreciation part of the business rate ({K.P.mileage.depreciationCents['2026']} cents in 2026) and the FAVR cost limit ({K.usd(K.P.mileage.favrMaxCost)}) come from Notice 2026-10.</p>
+    <Fragment set:html={table(['Period', 'Business', 'Charity', 'Medical or military move', 'IRS release'], mileRows, 'IRS standard mileage rates, cents per mile.', ['l', 'r', 'r', 'r', 'l'])} />
+    <h2>4. Tax rules</h2>
+    <p>High-low rates ({K.usd(K.P.highLow['2027'].high)} and {K.usd(K.P.highLow['2027'].low)} from October 1, 2026; {K.usd(K.P.highLow['2026'].high)} and {K.usd(K.P.highLow['2026'].low)} before) and the transportation industry M&IE ({K.usd(K.P.transportation.conus)} in CONUS, {K.usd(K.P.transportation.oconus)} outside) come from <Fragment set:html={src('irs_notice_2026_60', 'Notice 2026-60')} /> and <Fragment set:html={src('irs_notice_2025_54', 'Notice 2025-54')} />. Partial days for a deduction use 75% (<Fragment set:html={src('irs_rp_2019_48', 'Rev. Proc. 2019-48')} />, section 6.04(1)); a payor may use 75% or another consistent method. The 80% limit for workers under hours of service and the accountable plan rules come from <Fragment set:html={src('irs_pub_463', 'Publication 463')} />, the 7.5% floor for medical costs from <Fragment set:html={src('irs_pub_502', 'Publication 502')} />.</p>
+    <h2>5. Fuel, electricity and vehicles</h2>
+    <p>Gasoline and diesel: <Fragment set:html={src('eia_gas', 'EIA weekly retail prices')} />, week of {K.day(K.ENERGY_META.gasWeek)} (U.S. regular {K.usd(K.ENERGY_META.usGas, 3)}). Nine states have their own EIA series; the others take their region (New England, Central Atlantic, Lower Atlantic, Midwest, Gulf Coast, Rocky Mountain, West Coast outside California). Electricity: <Fragment set:html={src('eia_epm', 'EIA Electric Power Monthly, Table 5.6.B')} />, residential price year to date through July 2026. Consumption: <Fragment set:html={src('epa_fueleconomy', 'EPA fueleconomy.gov')} />, combined MPG and combined kWh per 100 miles (energy drawn from the outlet, charging losses included).</p>
+    <h2>6. Tests</h2>
+    <p>Before each release the engine passes tests built from official values: the five first and last day amounts of the GSA breakdown ({K.P.mie.tiers.map((m) => K.usd(m * share, 2)).join(', ')}), a four-day trip at $92 (2 × $69 + 2 × $92), a trip across September 30 (two nights at {K.usd(s26.lodging)}, one at {K.usd(s27.lodging)}), the seasonal Gulf Shores and Jackson figures of the GSA file, the 12-hour threshold, the meal deductions and the $5 floor, the IRS rates on June 30 and July 1, 2026, the GSA example of 100 miles at {K.usd(K.pov('2026-10-01'), 2)}, and every row of the GSA OCONUS breakdown from $1 to $265.</p>
+    <h2>7. Limits</h2>
+    <ul>
+      <li>CONUS only for the GSA tables; Alaska, Hawaii, territories and foreign cities are entered by hand from the Department of Defense or State tables.</li>
+      <li>No actual expense method, no agency-specific reduced rates for long stays, no conference lodging allowance.</li>
+      <li>A city is placed in its main county; a city spread over several counties may have neighborhoods in another GSA area. The ZIP code search is exact.</li>
+      <li>Fuel and electricity prices are averages of a week or of seven months; your pump and your utility differ.</li>
+      <li>The yearly loss of value of a car, insurance and maintenance are your own inputs: no official table exists.</li>
+    </ul>
+    <p>Corrections: <a href={route('contact', lang)}>contact page</a>.</p>
+  </article>
+</PageLayout>

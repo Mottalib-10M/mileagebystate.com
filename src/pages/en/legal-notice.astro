@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, LEGAL, SITE_NAMES, SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`${SITE_NAMES[lang]} legal notice: publisher, host and terms of use`} description="Publisher and host of Trip Expense Ledger, why each per diem and mileage figure is an estimate and not an entitlement, intellectual property, embedding and the law that applies." lang={lang} noindex={true} breadcrumbs={[{ label: 'Legal notice' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none prose-headings:font-serif">
+    <h1>Legal notice and terms of use</h1>
+    <p>Information given under Article 6 III-1 of French law no. 2004-575 of 21 June 2004, the publisher being established in France.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <p>Publication director: {AUTHOR_NAME}, responsible for the content of {SITE_URL}.</p>
+    <h2>Host</h2>
+    <LegalIdentity mode="hosting" lang={lang} />
+    <h2>Estimates, not entitlements</h2>
+    <p>{SITE_NAMES[lang]} applies the federal per diem rates published by GSA, the rules of the Federal Travel Regulation and the mileage rates published by the IRS to the dates and places you enter. It is not a government site and does not decide what anyone is paid. Your agency's travel authorization, your employer's policy and the tax rules that apply to your situation take precedence over any result shown here. The rules and their limits are on the <a href={route('method', lang)}>method page</a>.</p>
+    <h2>Liability</h2><p>Rates are read from official files and the calculators are tested before each release, yet errors and outdated figures cannot be ruled out. The publisher is not liable for a claim, a payment or a tax position based on a result alone. Report any error through the <a href={route('contact', lang)}>contact page</a>.</p>
+    <h2>Intellectual property</h2><p>Texts, design and code belong to the publisher; short quotations with a link are welcome. GSA, IRS, EIA and EPA data are public works of the United States government.</p>
+    <h2>Embedding</h2><p>The trip calculator may be embedded for free with its credit link visible: see the <a href={route('widget', lang)}>embed page</a>.</p>
+    <h2>Personal data</h2><p>The site sets no cookie and keeps nothing you type. Details: <a href={route('privacy', lang)}>privacy policy</a> and <a href={route('cookies', lang)}>cookies page</a>.</p>
+    <h2>Reporting unlawful content</h2><p>Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with the address of the page.</p>
+    <h2>Governing law</h2><p>French law applies; failing an amicable settlement, the courts of {LEGAL.jurisdiction} have jurisdiction. Updated: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

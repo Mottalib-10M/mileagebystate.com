@@ -1,0 +1,72 @@
+---
+/**
+ * Home, in the order of a trip: the whole-trip calculator first, the four rates in force today, the folded
+ * answer, the calendar of what changed in 2026, every state with its highest GSA lodging maximum, the tools
+ * by question, the long text in accordions, then the FAQ. Text: src/content/home.ts.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import Clamp from './Clamp.astro';
+import Tool from './Tool.astro';
+import { HOME } from '../content/home';
+import { route } from '../i18n/routes';
+import { GROUPS } from '../i18n/nav';
+import { helpers, SOURCES } from '../lib/helpers';
+import { PAGES, STATE_PAGES, stateId } from '../lib/pages';
+import { KIT as K } from '../lib/kit';
+import { T, destIndex } from '../lib/data';
+import { usd, day } from '../lib/fmt';
+import { faqSchema, organizationSchema, websiteSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+import { LAST_UPDATED } from '../data/site-config';
+const lang = 'en';
+const x = HOME;
+const path = route('home', lang);
+const h = helpers();
+const sources = x.sources.map((k) => ({ name: SOURCES[k].label, url: SOURCES[k].url }));
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(x.faqs, lang)];
+const dc = destIndex('DC', 'District of Columbia');
+const dest = { label: 'Washington, DC', detail: `GSA area: ${T.dest[dc].counties}`, d27: dc, d26: dc };
+const sections = x.sections(h);
+const states = STATE_PAGES.map((s) => { const sum = K.stateSummary(s.slug); return { href: route(stateId(s.slug), lang), name: sum.s.name, top: sum.top ? sum.top.high : sum.std.lodging, where: sum.top ? sum.top.name : 'standard rate statewide', n: sum.count }; });
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} sources={sources}>
+  <header class="mb-5">
+    <h1 class="font-serif text-3xl font-bold text-navy-900 md:text-4xl">{x.h1}</h1>
+    <p class="mt-3 text-lg text-navy-700">{x.intro}</p>
+    <p class="mt-2 text-sm text-navy-600">GSA FY2027 and IRS July 2026 rates, checked <time datetime={LAST_UPDATED}>{day(LAST_UPDATED)}</time> · <a href={route('method', lang)} class="underline">Rules and data behind each line</a> · <a href={route('about', lang)} class="underline">Who publishes this site</a></p>
+  </header>
+  <div data-outil><Tool kind="trip" dest={dest} idPrefix="home" /></div>
+  <section class="my-8" aria-labelledby="today">
+    <h2 id="today" class="font-serif text-xl font-bold text-navy-900">{x.todayTitle}</h2>
+    <dl class="mt-3 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+      {x.today(h).map((it) => <div class="border-t-2 border-accent-600 pt-2"><dt class="text-xs font-semibold uppercase tracking-wide text-navy-600">{it.label}</dt><dd class="tabular-nums mt-1 font-serif text-2xl font-bold text-navy-900">{it.figure}</dd><dd class="text-sm text-navy-700">{it.note}</dd></div>)}
+    </dl>
+  </section>
+  <Clamp text={x.resume} lang={lang} id="clamp-home" class="my-8" />
+  <section class="my-10" aria-labelledby="changes">
+    <h2 id="changes" class="font-serif text-2xl font-bold text-navy-900">{x.timelineTitle}</h2>
+    <ol class="mt-4 space-y-4 border-l-2 border-navy-200 pl-5">
+      {x.timeline(h).map((it) => <li><p class="text-sm font-semibold text-accent-700"><time datetime={it.date}>{day(it.date)}</time></p><p class="text-navy-800" set:html={it.text} /></li>)}
+    </ol>
+  </section>
+  <section class="my-10" data-chrome aria-labelledby="bystate">
+    <h2 id="bystate" class="font-serif text-2xl font-bold text-navy-900">Highest GSA lodging maximum in each state, FY2027</h2>
+    <ul class="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
+      {states.map((s) => <li class="flex items-baseline justify-between gap-3 border-b border-navy-100 pb-1"><a href={s.href} class="font-medium text-accent-700 underline-offset-2 hover:underline">{s.name}</a><span class="tabular-nums text-navy-700">{usd(s.top)} <span class="text-xs text-navy-600">{s.where}</span></span></li>)}
+    </ul>
+  </section>
+  <section class="mb-10" data-chrome aria-labelledby="tools">
+    <h2 id="tools" class="font-serif text-2xl font-bold text-navy-900">Other calculations, by question</h2>
+    {GROUPS.map((g) => (
+      <div class="mt-5">
+        <h3 class="font-serif text-lg font-bold text-navy-900">{g.label}</h3>
+        <ul class="mt-2 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
+          {PAGES.filter((p) => p.group === g.id).map((p) => <li><a href={route(p.id, lang)} class="font-medium text-accent-700 underline-offset-2 hover:underline">{p.nav}</a><span class="block text-navy-600">{p.card}</span></li>)}
+        </ul>
+      </div>
+    ))}
+  </section>
+  <section class="mt-10">
+    <h2 class="font-serif text-2xl font-bold text-navy-900">{x.foldTitle}</h2>
+    {sections.map((s) => <details class="fold"><summary><h3 class="fold-h">{s.title}</h3></summary><div class="prose prose-slate max-w-none pb-4"><Fragment set:html={s.html} /></div></details>)}
+  </section>
+</PageLayout>

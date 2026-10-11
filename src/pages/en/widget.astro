@@ -1,0 +1,25 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { breadcrumbSchema } from '../../lib/seo';
+const lang = 'en';
+const frames = [
+  { slug: 'trip', title: 'Per diem and mileage trip calculator (GSA FY2027, IRS 2026)', h: 1150, who: 'Travel offices, university business offices, HR intranets, associations that run conferences' },
+  { slug: 'mileage', title: 'IRS mileage reimbursement calculator, 2026 rates', h: 900, who: 'Payroll providers, accountants, nonprofits paying volunteers, sales teams' },
+];
+const code = (f: (typeof frames)[number]) => `<iframe src="${SITE_URL}/embed/${f.slug}/" title="${f.title}" width="100%" height="${f.h}" style="border:0;max-width:1000px" loading="lazy"></iframe>`;
+---
+<PageLayout title="Embed the per diem trip calculator or mileage calculator, free" description="Embed the per diem trip calculator or the IRS mileage calculator on an intranet or a travel office page with one iframe line. Free, no cookie, updated with each GSA and IRS release." lang={lang} noindex={true} jsonLd={[breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Embed the calculator', path: route('widget', lang) }])]} breadcrumbs={[{ label: 'Embed the calculator' }]} showAuthor={false}>
+  <header class="mb-6">
+    <h1 class="font-serif text-3xl font-bold text-navy-900 md:text-4xl">Embed the calculator</h1>
+    <p class="mt-3 text-lg text-navy-700">One line of code. When GSA opens a new fiscal year or the IRS changes its mileage rate, the embedded calculator follows.</p>
+  </header>
+  <div class="prose prose-slate max-w-none">
+    <p>Terms: keep the credit link under the frame visible, do not alter it, and present results as federal rates applied to a trip, not as what your organization will pay. The frame sets no cookie and tells us nothing about your visitors. Questions: <a href={route('contact', lang)}>contact page</a>.</p>
+    {frames.map((f) => <><h2>{f.title}</h2><p>Useful for: {f.who}.</p><pre class="overflow-x-auto rounded-lg bg-navy-900 p-4 text-sm text-white"><code>{code(f)}</code></pre></>)}
+  </div>
+  <div class="mt-8 overflow-hidden rounded-xl border border-navy-200">
+    <iframe src="/embed/trip/" title="Per diem and mileage trip calculator" width="100%" height="1150" style="border:0" loading="lazy"></iframe>
+  </div>
+</PageLayout>

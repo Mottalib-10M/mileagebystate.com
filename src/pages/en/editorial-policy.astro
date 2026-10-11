@@ -1,0 +1,19 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { route } from '../../i18n/routes';
+import { AUTHOR_NAME, REVIEW_CYCLE_MONTHS } from '../../data/site-config';
+const lang = 'en';
+---
+<PageLayout title="Editorial policy of Trip Expense Ledger: sources, updates, fixes" description="How Trip Expense Ledger reads GSA, IRS and EIA releases, writes its pages and corrects errors: rates from data files, rules from the regulation, update dates shown on every page." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none prose-headings:font-serif">
+    <h1>Editorial policy</h1>
+    <h2>Sources accepted</h2>
+    <p>Per diem rates come from GSA files; day rules from the Federal Travel Regulation in the electronic Code of Federal Regulations; mileage, high-low and special rates from IRS notices, announcements and publications; energy prices from the Energy Information Administration; vehicle consumption from the EPA. Expense app blogs, travel agencies and forums can raise a question; they never supply a figure.</p>
+    <h2>How a page is written</h2>
+    <p>No rate is typed into a page: lodging maximums, M&IE tiers, cents per mile and fuel prices are read from data files rebuilt from the official downloads, so that one update corrects every page that uses them. Each page cites its sources, names the release and its date, and says what the tool leaves out.</p>
+    <h2>Independence</h2>
+    <p>{AUTHOR_NAME} receives nothing from expense software publishers, travel agencies, hotels, car makers or employers. The site runs no advertising today; if it ever does, ads will be marked and kept away from the calculators.</p>
+    <h2>Updates and corrections</h2>
+    <p>The whole site is reviewed at least every {REVIEW_CYCLE_MONTHS} months and whenever a source moves: the GSA fiscal year in August or September, IRS mileage rates in December (and in mid-year when the IRS revises them, as on July 1, 2026), the IRS special per diem notice in September, EIA prices weekly and monthly. A reported error is checked against the source and corrected, and the date at the top of the page changes. Write through the <a href={route('contact', lang)}>contact page</a>; the rules are on the <a href={route('method', lang)}>method page</a>.</p>
+  </div>
+</PageLayout>
