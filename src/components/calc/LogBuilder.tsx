@@ -36,7 +36,7 @@ export default function LogBuilder({ methodHref }: { methodHref: string }) {
             <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-p${i}`}>Purpose</label><input id={`lg-p${i}`} value={l.purpose} onChange={(e) => set(i, 'purpose', e.target.value)} className={cell} /></td>
             <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-r${i}`}>From and to</label><input id={`lg-r${i}`} value={l.route} onChange={(e) => set(i, 'route', e.target.value)} className={cell} /></td>
             <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-m${i}`}>Miles</label><input id={`lg-m${i}`} inputMode="decimal" value={l.miles ? String(l.miles) : ''} onChange={(e) => set(i, 'miles', e.target.value)} className={`${cell} text-right tabular-nums`} /></td>
-            <td className="tabular-nums px-1 py-1 text-right">{usd(l.miles * r(l.date), 2)}</td>
+            <td className="tabular-nums px-1 py-1 text-right">{usd(l.miles * r(l.date))}</td>
             <td className="px-1 py-1 text-right"><button type="button" onClick={() => setLines((ls) => ls.filter((_, j) => j !== i))} className="rounded border border-navy-300 px-2 py-1 text-xs text-navy-700 hover:bg-navy-50" aria-label={`Remove line ${i + 1}`}>Remove</button></td>
           </tr>))}</tbody>
       </table></div>
@@ -45,7 +45,7 @@ export default function LogBuilder({ methodHref }: { methodHref: string }) {
         <button type="button" onClick={csv} className="rounded-lg border border-navy-300 bg-white px-3 py-1.5 font-medium text-navy-800 hover:bg-navy-50">Download CSV</button>
         <button type="button" onClick={() => window.print()} className="rounded-lg border border-navy-300 bg-white px-3 py-1.5 font-medium text-navy-800 hover:bg-navy-50">Print the log</button>
       </div>
-      <Result label="Business miles logged" figure={`${num(total)} mi`} sub={`Worth ${usd(value, 2)} at the IRS business rates`}>
+      <Result label="Business miles logged" figure={`${num(total)} mi`} sub={`Worth ${usd(value)} at the IRS business rates`}>
         <Rows rows={[['Trips', num(lines.length)], ['Rate before July 1, 2026', rate(r('2026-06-30'))], ['Rate from July 1, 2026', rate(r('2026-07-01'))]]} />
         <Note methodHref={methodHref}>Each line keeps the rate of its own date. The log stays in this browser tab; download the CSV before closing it.</Note>
       </Result>

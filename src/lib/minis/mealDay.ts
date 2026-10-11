@@ -1,6 +1,6 @@
 /** Mini: M&IE left for one day after provided meals, at a chosen tier, full day or travel day. */
 import type { MiniSpec } from '../mini-types';
-import { usd, TIERS, yesNo, PARAMS } from './_kit';
+import { usd, TIERS, yesNo, PARAMS, money } from './_kit';
 export default function mealDay(): MiniSpec {
   const share = PARAMS.mie.partialDayShare;
   return {
@@ -15,7 +15,7 @@ export default function mealDay(): MiniSpec {
     run: (v) => {
       const t = TIERS[String(v.t)] ?? TIERS['80']; const allowed = v.t * (v.d ? share : 1);
       const off = (v.l ? t[1] : 0) + (v.n ? t[2] : 0); const net = Math.max(Math.min(t[3], allowed), allowed - off);
-      return { head: ['M&IE paid for that day', usd(net, 2)], rows: [['Before meal deductions', usd(allowed, 2)], ['Lunch value', usd(t[1])], ['Dinner value', usd(t[2])], ['Floor: incidental expenses', usd(t[3])]] };
+      return { head: ['M&IE paid for that day', money(net)], rows: [['Before meal deductions', money(allowed)], ['Lunch value', usd(t[1])], ['Dinner value', usd(t[2])], ['Floor: incidental expenses', usd(t[3])]] };
     },
   };
 }

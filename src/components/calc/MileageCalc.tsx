@@ -48,8 +48,8 @@ export default function MileageCalc({ mode, methodHref, idPrefix = 'mi', purpose
         <NumberField id={`${p}-pk`} label="Business parking and tolls" value={parking} onChange={setParking} unit="$" max={100000} help="Reimbursable on top of the rate" />
       </>}>
         <Result label="Reimbursement at the IRS rates" figure={usd(s.total + parking)} sub={`${num(before + after)} miles · ${rate(s.rateBefore)} then ${rate(s.rateAfter)}`}>
-          <Rows rows={[[`First half: ${num(before)} mi × ${rate(s.rateBefore)}`, usd(s.before, 2)], [`Second half: ${num(after)} mi × ${rate(s.rateAfter)}`, usd(s.after, 2)], ['Parking and tolls', usd(parking, 2)], [`Your employer pays ${rate(empRate)} a mile`, usd(paid + parking, 2)],
-            [r.taxableExcess > 0 ? 'Part above the IRS rates (wages unless returned)' : 'Gap below the IRS rates (not deductible by an employee)', usd(r.taxableExcess > 0 ? r.taxableExcess : r.shortfall, 2), true]]} />
+          <Rows rows={[[`First half: ${num(before)} mi × ${rate(s.rateBefore)}`, usd(s.before)], [`Second half: ${num(after)} mi × ${rate(s.rateAfter)}`, usd(s.after)], ['Parking and tolls', usd(parking)], [`Your employer pays ${rate(empRate)} a mile`, usd(paid + parking)],
+            [r.taxableExcess > 0 ? 'Part above the IRS rates (wages unless returned)' : 'Gap below the IRS rates (not deductible by an employee)', usd(r.taxableExcess > 0 ? r.taxableExcess : r.shortfall), true]]} />
           <Note methodHref={methodHref}>Under an accountable plan the IRS rates are the most an employer can pay tax free without receipts for actual costs; the rate in force on the day of the drive applies.</Note>
           <Actions />
         </Result>
@@ -69,8 +69,8 @@ export default function MileageCalc({ mode, methodHref, idPrefix = 'mi', purpose
       <DateField id={`${p}-d`} label="Date driven" value={date} onChange={setDate} min="2025-01-01" max="2026-12-31" help={`IRS rate that day: ${rate(r1)} a mile`} />
       <NumberField id={`${p}-pk`} label="Parking and tolls" value={parking} onChange={setParking} unit="$" max={100000} />
     </>}>
-      <Result label={`${PURPOSES.find((x) => x.value === purpose)?.label} mileage value`} figure={usd(value, 2)} sub={`${num(totalMiles)} miles × ${rate(r1)} + ${usd(parking)} parking and tolls`}>
-        <Rows rows={PARAMS.mileage.irs.slice(0, 2).map((x) => [`Same miles at the rate of ${x.from.slice(5) === '07-01' ? 'July 1 to Dec. 31, 2026' : 'Jan. 1 to June 30, 2026'}`, usd(totalMiles * (x as Record<string, number | string>)[purpose] as number, 2)] as [string, string])} />
+      <Result label={`${PURPOSES.find((x) => x.value === purpose)?.label} mileage value`} figure={usd(value)} sub={`${num(totalMiles)} miles × ${rate(r1)} + ${usd(parking)} parking and tolls`}>
+        <Rows rows={PARAMS.mileage.irs.slice(0, 2).map((x) => [`Same miles at the rate of ${x.from.slice(5) === '07-01' ? 'July 1 to Dec. 31, 2026' : 'Jan. 1 to June 30, 2026'}`, usd(totalMiles * (x as Record<string, number | string>)[purpose] as number)] as [string, string])} />
         <Note methodHref={methodHref}>{purpose === 'charity' ? 'The charity rate is fixed by law (26 U.S.C. 170(i)) and did not change on July 1.' : purpose === 'medical' ? 'Medical miles only count in the part of your medical costs above 7.5% of your AGI, and only if you itemize.' : 'Rates from IRS Notice 2026-10 and Announcement 2026-11.'}</Note>
         <Actions />
       </Result>

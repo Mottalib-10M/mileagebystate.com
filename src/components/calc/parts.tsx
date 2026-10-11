@@ -5,6 +5,8 @@ import { formatMoney, formatNumber } from '../../lib/format';
 export const usd = (n: number, d = 0) => formatMoney(Number.isFinite(n) ? n : 0, d);
 export const num = (n: number, d = 0) => formatNumber(Number.isFinite(n) ? n : 0, d);
 /** Per-mile or per-kWh prices keep their published decimals: $0.725, $4.35. */
+/** Amounts built from official half-dollar figures (75% of an M&IE tier) keep their cents; others none. */
+export const money = (n: number) => (Math.abs(n * 100 - Math.round(n) * 100) < 0.5 ? usd(n) : usd(n, 2));
 export const rate = (n: number) => (Math.round(n * 1000) % 10 ? usd(n, 3) : usd(n, 2));
 export const dayLabel = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
 export interface Opt { value: string; label: string }

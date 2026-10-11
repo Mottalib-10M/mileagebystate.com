@@ -1,6 +1,6 @@
 import type { Locale } from './routes';
 const en = {
-  updatedOn: 'Rates checked on', editorialPolicy: 'Editorial policy', contactLabel: 'Contact', reviewedBy: 'Published by',
+  updatedOn: 'Rates updated on', editorialPolicy: 'Editorial policy', contactLabel: 'Contact', reviewedBy: 'Published by',
   skipToContent: 'Skip to content', mainNav: 'Main navigation', breadcrumbLabel: 'Breadcrumb', breadcrumbHome: 'Home', menuOpen: 'Open menu',
   faqTitle: 'Questions travelers ask', relatedCalculators: 'Related calculations', sourcesTitle: 'Rules and tables behind this page', writtenBy: 'Published by',
   asOf: 'GSA FY2026 and FY2027 tables, IRS mileage rates for', lastUpdated: 'read on the official releases on', footerValidated: 'Sources: GSA, IRS, Federal Travel Regulation, EIA, EPA',

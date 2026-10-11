@@ -43,7 +43,7 @@ export default function EvCalc({ mode = 'ev', state = 'california', methodHref, 
   return (
     <Card cols={3} form={<>
       <SelectField id={`${p}-v`} label={mode === 'tesla' ? 'Tesla model (EPA)' : 'Electric vehicle (EPA)'} value={model} onChange={setModel} options={list.map((e) => ({ value: e.id, label: `${e.label}: ${num(e.kwh100, 1)} kWh/100 mi` }))} />
-      <SelectField id={`${p}-st`} label="State" value={st} onChange={setSt} options={STATES.map((s) => ({ value: s.slug, label: s.name }))} help={`EIA residential, ${ENERGY.elecPeriod.replace(/^.*Year-to-Date through /i, 'Jan. to ').replace(/ and 2025.*$/, '')}: ${num(S.elecCents, 2)}¢/kWh`} />
+      <SelectField id={`${p}-st`} label="State" value={st} onChange={setSt} options={STATES.map((s) => ({ value: s.slug, label: s.name }))} help={`EIA residential, ${ENERGY.elecPeriod}: ${num(S.elecCents, 2)}¢/kWh`} />
       <NumberField id={`${p}-mi`} label={mode === 'compare' ? 'Miles per year' : 'Miles to drive'} value={miles} onChange={setMiles} unit="mi" max={200000} />
       <NumberField id={`${p}-hp`} label="Your home price (optional)" value={home} onChange={setHome} unit="¢/kWh" max={200} decimals={2} help="From your bill: total ÷ kWh" />
       {mode !== 'compare' && <><NumberField id={`${p}-ps`} label="Share charged in public" value={pub} onChange={setPub} unit="%" max={100} /><NumberField id={`${p}-pp`} label="Public charger price" value={pubPrice} onChange={setPubPrice} unit="¢/kWh" max={200} decimals={2} help="As posted on the charger or app" /></>}
@@ -54,8 +54,8 @@ export default function EvCalc({ mode = 'ev', state = 'california', methodHref, 
             <Rows rows={[['EV cost per mile', rate(r.perMile)], ['Gasoline cost per mile', rate(g.perMile)], ['Five years at this mileage', usd((g.cost - r.cost) * 5)]]} />
             <Note methodHref={methodHref}>Energy only: purchase price, insurance and maintenance are in the cost of ownership calculator.</Note><Actions />
           </Result>
-        : <Result label={mode === 'tesla' ? `Full charge of a ${v.label}` : `Charging cost for ${num(miles)} miles`} figure={usd(mode === 'tesla' ? full.cost : r.cost, 2)} sub={mode === 'tesla' ? `${num(v.range)} miles of EPA range · ${num(full.kwh, 1)} kWh from the wall at ${num(cents, 2)}¢` : `${num(r.kwh)} kWh · ${rate(r.perMile)} a mile`}>
-            <Rows rows={[...(mode === 'tesla' ? [[`${num(miles)} miles`, usd(r.cost, 2)] as [string, string]] : [[`Full EPA range (${num(v.range)} mi)`, usd(full.cost, 2)] as [string, string]]), ['Per 100 miles', usd(r.perMile * 100, 2)], ['Home part', usd(r.home, 2)], ['Public part', usd(r.public, 2)], ['Same miles at the IRS business rate', usd(miles * PARAMS.mileage.irs[0].business, 2)]]} />
+        : <Result label={mode === 'tesla' ? `Full charge of a ${v.label}` : `Charging cost for ${num(miles)} miles`} figure={usd(mode === 'tesla' ? full.cost : r.cost)} sub={mode === 'tesla' ? `${num(v.range)} miles of EPA range · ${num(full.kwh, 1)} kWh from the wall at ${num(cents, 2)}¢` : `${num(r.kwh)} kWh · ${rate(r.perMile)} a mile`}>
+            <Rows rows={[...(mode === 'tesla' ? [[`${num(miles)} miles`, usd(r.cost)] as [string, string]] : [[`Full EPA range (${num(v.range)} mi)`, usd(full.cost)] as [string, string]]), ['Per 100 miles', usd(r.perMile * 100)], ['Home part', usd(r.home)], ['Public part', usd(r.public)], ['Same miles at the IRS business rate', usd(miles * PARAMS.mileage.irs[0].business)]]} />
             <Note methodHref={methodHref}>EPA kWh/100 mi counts the energy drawn from the outlet, charging losses included. A full charge here means the EPA range from empty, a slight overstatement of a real 10 to 90% session.</Note><Actions />
           </Result>}
     </Card>

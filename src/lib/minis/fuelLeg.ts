@@ -1,6 +1,6 @@
 /** Mini: fuel for a drive at a given MPG and price (arg = { label, price } from the page, EIA figure). */
 import type { MiniSpec } from '../mini-types';
-import { usd, num, rate, parseArg, PARAMS } from './_kit';
+import { usd, num, rate, parseArg, PARAMS, money } from './_kit';
 interface Arg { label: string; price: number }
 export default function fuelLeg(arg?: string): MiniSpec {
   const a = parseArg<Arg>(arg, { label: 'U.S. regular', price: 4 });
@@ -14,7 +14,7 @@ export default function fuelLeg(arg?: string): MiniSpec {
     ],
     run: (v) => {
       const gal = v.g > 0 ? v.m / v.g : 0;
-      return { head: ['Fuel cost', usd(gal * a.price, 2)], rows: [[`${num(gal, 1)} gal × ${rate(a.price)}`, usd(gal * a.price, 2)], ['Per mile', rate(v.g > 0 ? a.price / v.g : 0)], [`Same miles at the IRS rate (${rate(irs)})`, usd(v.m * irs, 2)]] };
+      return { head: ['Fuel cost', money(gal * a.price)], rows: [[`${num(gal, 1)} gal × ${rate(a.price)}`, money(gal * a.price)], ['Per mile', rate(v.g > 0 ? a.price / v.g : 0)], [`Same miles at the IRS rate (${rate(irs)})`, money(v.m * irs)]] };
     },
   };
 }

@@ -100,10 +100,11 @@ for r in csv.DictReader(open(os.path.join(RAW, 'place_county.txt'), encoding='la
     place_counties[(r['STATEFP'], r['PLACEFP'])].append(r['COUNTYFP'])
 def gsa_county(s):
     """'Miami/Dade County, FL' -> 'miami-dade'; 'Baltimore City, MD' -> 'baltimore city'."""
-    c = s.split(',')[0].lower().replace('/', '-').replace('jeff n davis', 'jefferson davis')
+    c = s.split(',')[0].lower().replace('/', '-').replace('jeff n davis', 'jefferson davis').replace(' & ', ' and ')
+    c = re.sub(r'^st ', 'st. ', c).replace('saint ', 'st. ')
     return re.sub(r' (county|parish)$', '', c).strip()
 def census_county(s):
-    c = s.lower().replace("'", "'")
+    c = s.lower().replace("'", "'").replace('saint ', 'st. ')
     c = re.sub(r' (county|parish)$', '', c).strip()
     return [c, re.sub(r' city$', '', c)] if c.endswith(' city') else [c]
 # A county belongs to the destination that holds most of its ZIP codes (Edwards AFB ZIPs sit in Kern
@@ -132,7 +133,11 @@ for (sfp, pfp), (st, pname, typ) in places.items():
         k = None
         for kk in keys:
             dd = dest[kk]
-            if dd['st'] == st and dd['counties'].lower().startswith('city limits of') and dd['counties'].lower().endswith(nm.lower()) and str(fy) in dd['fy']: k = kk
+            if dd['st'] != st or str(fy) not in dd['fy']: continue
+            cl = dd['counties'].lower()
+            if cl.startswith('city limits of') and cl.endswith(nm.lower()): k = kk
+            # "Suffolk, city of Cambridge": a city named inside another area's definition (not after "less the")
+            elif re.search(r'(?<!less the )\bcity of ' + re.escape(nm.lower()) + r'\b', cl): k = kk
         if not k:
             for ck in census_county(cname):
                 k = nsa_by_county[fy].get((st, ck))
@@ -159,7 +164,7 @@ def find(series, word):
     return None
 PADDNAME = {'1A': 'New England (PADD 1A)', '1B': 'Central Atlantic (PADD 1B)', '1C': 'Lower Atlantic (PADD 1C)', '2': 'Midwest', '3': 'Gulf Coast', '4': 'Rocky Mountain', '5': 'West Coast (PADD 5) Except California'}
 ws = openpyxl.load_workbook(os.path.join(RAW, 'elec56b.xlsx'), read_only=True).worksheets[0]
-erows = list(ws.iter_rows(values_only=True)); eperiod = clean(erows[1][0])
+erows = list(ws.iter_rows(values_only=True)); _m = re.search(r'through (\w+ \d{4})', clean(erows[1][0])); eperiod = f'January to {_m.group(1)}'
 elec = {clean(r[0]): r[1] for r in erows[4:] if r[0] and isinstance(r[1], (int, float))}
 states = []
 for ab, nm in STATES:

@@ -14,7 +14,7 @@ import { irsRate, povRate } from '../../lib/engine/mileage';
 import { addDays, daysBetween, fiscalYear } from '../../lib/engine/dates';
 import { search, destLabel, type Hit } from '../../lib/search';
 import { readParams, num as pnum, str as pstr, updateURL } from '../../lib/url-state';
-import { Card, DateField, Result, Rows, Note, Actions, SplitBar, COLORS, usd, num, rate, dayLabel } from './parts';
+import { Card, DateField, Result, Rows, Note, Actions, SplitBar, COLORS, usd, num, rate, money, dayLabel } from './parts';
 
 const T = PERDIEM as unknown as Tables;
 interface Pick { label: string; detail: string; d27: number; d26: number }
@@ -123,11 +123,11 @@ export default function TripCalc({ mode = 'trip', dest = STD, methodHref, idPref
         <Rows rows={[
           [`Lodging, ${r.nights} night${r.nights === 1 ? '' : 's'}${room ? ' (room price, capped)' : ' at the GSA maximum'}`, usd(r.lodging)],
           ...(tax ? [['Lodging taxes', usd(tax)] as [string, string]] : []),
-          ['M&IE before meal deductions', usd(r.mieGross, 2)],
-          ...(r.deductions ? [['Provided meals deducted', `−${usd(r.deductions, 2)}`] as [string, string]] : []),
-          ['M&IE paid', usd(r.mie, 2)],
-          ...(mode === 'trip' ? [[`Mileage, ${num(miles)} mi × ${rate(perMile)}`, usd(transport, 2)] as [string, string], ['Other costs at receipt', usd(extra)] as [string, string]] : []),
-          ['Total', usd(total, 2), true],
+          ['M&IE before meal deductions', money(r.mieGross)],
+          ...(r.deductions ? [['Provided meals deducted', `−${money(r.deductions)}`] as [string, string]] : []),
+          ['M&IE paid', money(r.mie)],
+          ...(mode === 'trip' ? [[`Mileage, ${num(miles)} mi × ${rate(perMile)}`, usd(transport)] as [string, string], ['Other costs at receipt', usd(extra)] as [string, string]] : []),
+          ['Total', usd(total), true],
         ]} />
         {!r.eligible && <Note>A same-day trip of 12 hours or less gives no federal M&IE (41 CFR 301-11.1(c)); many private employers follow the same rule.</Note>}
         <Note methodHref={methodHref}>{fyNote}</Note>
@@ -135,7 +135,7 @@ export default function TripCalc({ mode = 'trip', dest = STD, methodHref, idPref
           <summary className="cursor-pointer text-sm font-semibold text-navy-800">Day by day</summary>
           <div className="overflow-x-auto"><table className="journal mt-2 w-full text-sm">
             <thead><tr><th scope="col" className="px-2 py-1 text-left">Day</th><th scope="col" className="px-2 py-1 text-right">Lodging</th><th scope="col" className="px-2 py-1 text-right">M&IE rate</th><th scope="col" className="px-2 py-1 text-right">Share</th><th scope="col" className="px-2 py-1 text-right">Meals off</th><th scope="col" className="px-2 py-1 text-right">M&IE paid</th></tr></thead>
-            <tbody>{r.days.map((d) => <tr key={d.date} className="border-b border-navy-100"><td className="px-2 py-1">{dayLabel(d.date)} <span className="text-navy-500">FY{d.fy}</span></td><td className="tabular-nums px-2 py-1 text-right">{d.lodging ? usd(d.lodging) : '–'}</td><td className="tabular-nums px-2 py-1 text-right">{usd(d.mie)}</td><td className="tabular-nums px-2 py-1 text-right">{num(d.share * 100)}%</td><td className="tabular-nums px-2 py-1 text-right">{d.deduction ? usd(d.deduction, 2) : '–'}</td><td className="tabular-nums px-2 py-1 text-right">{usd(d.mieNet, 2)}</td></tr>)}</tbody>
+            <tbody>{r.days.map((d) => <tr key={d.date} className="border-b border-navy-100"><td className="px-2 py-1">{dayLabel(d.date)} <span className="text-navy-700">FY{d.fy}</span></td><td className="tabular-nums px-2 py-1 text-right">{d.lodging ? usd(d.lodging) : '–'}</td><td className="tabular-nums px-2 py-1 text-right">{usd(d.mie)}</td><td className="tabular-nums px-2 py-1 text-right">{num(d.share * 100)}%</td><td className="tabular-nums px-2 py-1 text-right">{d.deduction ? money(d.deduction) : '–'}</td><td className="tabular-nums px-2 py-1 text-right">{money(d.mieNet)}</td></tr>)}</tbody>
           </table></div>
         </details>
         <Actions />

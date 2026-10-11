@@ -1,6 +1,6 @@
 /** Mini: charging cost of a drive (arg = { label, cents } from the page: EIA residential price). */
 import type { MiniSpec } from '../mini-types';
-import { usd, num, rate, parseArg } from './_kit';
+import { usd, num, rate, parseArg, money } from './_kit';
 interface Arg { label: string; cents: number; kwh100?: number }
 export default function evCharge(arg?: string): MiniSpec {
   const a = parseArg<Arg>(arg, { label: 'U.S. average', cents: 17, kwh100: 28 });
@@ -13,7 +13,7 @@ export default function evCharge(arg?: string): MiniSpec {
     ],
     run: (v) => {
       const kwh = (v.m * v.k) / 100; const cost = (kwh * a.cents) / 100;
-      return { head: ['Electricity cost', usd(cost, 2)], rows: [['Energy from the outlet', `${num(kwh)} kWh`], [`Price: ${num(a.cents, 2)}¢ per kWh`, usd(cost, 2)], ['Per mile', rate(v.m > 0 ? cost / v.m : 0)]] };
+      return { head: ['Electricity cost', money(cost)], rows: [['Energy from the outlet', `${num(kwh)} kWh`], [`Price: ${num(a.cents, 2)}¢ per kWh`, money(cost)], ['Per mile', rate(v.m > 0 ? cost / v.m : 0)]] };
     },
   };
 }
