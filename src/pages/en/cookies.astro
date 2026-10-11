@@ -9,9 +9,9 @@ const lang = 'en';
     <h1>Cookies</h1>
     <p>This site sets no cookie and writes nothing to local storage. Your destination, dates, meals and miles exist only in the page you are using, and in its address once you change a field, so that the share link works.</p>
     <h2>Why there is no banner</h2>
-    <p>A consent banner is needed when a site stores or reads information on your device that is not strictly necessary. Nothing of the kind happens here. {CLARITY_ID ? 'The stability monitoring described in the privacy policy runs without cookies and stores nothing on your device.' : 'No analytics or advertising script is loaded.'}</p>
+    <p>A consent banner is needed when a site stores or reads information on your device that is not strictly necessary. Nothing of the kind happens here. {CLARITY_ID ? 'The stability monitoring described in the privacy policy, Microsoft Clarity, runs in its cookie-free mode and stores nothing on your device.' : 'No analytics or advertising script is loaded.'}</p>
     <h2>Verify it</h2>
-    <p>Open the developer tools (F12), then the Application or Storage tab: Cookies and Local Storage stay empty while you use the trip calculator. The Network tab shows that changing a date sends no request. The only files fetched after the page loads are the city list and the ZIP table, from this site, the first time you search.</p>
+    <p>Open the developer tools (F12), then the Application or Storage tab: Cookies and Local Storage stay empty while you use the trip calculator. The Network tab shows that your dates and miles are never sent to this site{CLARITY_ID ? ' (the only outside requests are the anonymous Microsoft Clarity stability pings, with inputs masked)' : ''}. The only files fetched after the page loads are the city list and the ZIP table, from this site, the first time you search.</p>
     <p>More in the <a href={route('privacy', lang)}>privacy policy</a>. Updated: {LAST_UPDATED}.</p>
   </div>
 </PageLayout>
