@@ -50,7 +50,7 @@ const statePages = page.id === STATE_PILLAR ? STATE_PAGES : [];
       </section>
     )}
     <div class="prose prose-slate max-w-none prose-headings:font-serif">
-      {parts.map((p, i) => i % 3 === 0 ? <Fragment set:html={p ?? ''} /> : i % 3 === 1 ? <MiniSim client:load kind={p} arg={decode(parts[i + 1])} href={path} /> : null)}
+      {parts.map((p, i) => i % 3 === 0 ? <Fragment set:html={p ?? ''} /> : i % 3 === 1 ? <div data-chrome><MiniSim client:load kind={p} arg={decode(parts[i + 1])} href={path} /></div> : null)}
     </div>
   </article>
 </PageLayout>

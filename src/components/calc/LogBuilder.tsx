@@ -28,7 +28,7 @@ export default function LogBuilder({ methodHref }: { methodHref: string }) {
   const cell = 'h-12 w-full rounded-lg border border-navy-300 bg-white px-2 text-sm text-navy-900 focus:border-accent-500 focus:outline-none';
   return (
     <div className="rechner rounded-xl border border-navy-200 bg-white p-4 sm:p-6">
-      <div className="overflow-x-auto"><table className="journal w-full min-w-[640px] text-sm">
+      <div className="relative overflow-x-auto"><table className="journal w-full min-w-[640px] text-sm">
         <thead><tr><th scope="col" className="px-1 py-1 text-left">Date</th><th scope="col" className="px-1 py-1 text-left">Business purpose</th><th scope="col" className="px-1 py-1 text-left">From and to</th><th scope="col" className="px-1 py-1 text-right">Miles</th><th scope="col" className="px-1 py-1 text-right">Value</th><th scope="col" className="sr-only">Remove</th></tr></thead>
         <tbody>{lines.map((l, i) => (
           <tr key={i}>

@@ -66,7 +66,7 @@ export default function CarCostCalc({ mode, methodHref, idPrefix = 'car' }: Prop
   // deduction: standard rate vs actual expenses, business share
   const std = v.milesH1 * IRS_H1 + Math.max(0, v.bizMiles - v.milesH1) * IRS + v.park;
   const act = v.actual * (v.bizShare / 100) + v.park;
-  return <Card cols={3} form={<>{f('bizMiles', 'Business miles in 2026', 'mi', 200000)}{f('milesH1', 'Of which before July 1', 'mi', 200000, 0, `${rate(IRS_H1)} before, ${rate(IRS)} after`)}{f('bizShare', 'Business share of all miles', '%', 100)}{f('actual', 'Actual car costs for the year', '$', 500000, 0, 'Gas, oil, repairs, insurance, registration, lease or depreciation')}{f('park', 'Business parking and tolls', '$', 100000)}</>}>
+  return <Card cols={3} form={<>{f('bizMiles', 'Business miles in 2026', 'mi', 200000)}{f('milesH1', 'Of which before July 1', 'mi', 200000, 0, `${rate(IRS_H1)} before, ${rate(IRS)} after`)}{f('bizShare', 'Business share of all miles', '%', 100)}{f('actual', 'Actual car costs for the year', '$', 500000, 0, 'Every car cost of the year')}{f('park', 'Business parking and tolls', '$', 100000)}</>}>
     <Result label={std >= act ? 'The standard mileage rate gives more' : 'Actual expenses give more'} figure={usd(Math.max(std, act))} sub={`Standard ${usd(std)} · actual ${usd(act)}`}>
       <Rows rows={[['Standard mileage deduction', usd(std)], [`Actual expenses × ${num(v.bizShare)}%`, usd(act)], ['Difference', usd(Math.abs(std - act)), true]]} />
       <Note methodHref={methodHref}>Self-employed people deduct on Schedule C. The standard rate must be chosen in the car's first business year to keep the option later (IR-2025-128).</Note><Actions />

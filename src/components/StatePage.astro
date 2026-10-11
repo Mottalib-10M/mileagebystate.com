@@ -59,7 +59,7 @@ rows.push(['Rest of the state', 'All other counties', usd(sum.std.lodging), usd(
     <div data-outil class="mb-8"><Tool kind="perdiem" dest={dest} idPrefix={`${S.abbr.toLowerCase()}pd`} /></div>
     <Clamp text={def.resume} lang={lang} id={`clamp-st-${def.slug}`} class="mb-8" />
     <div class="prose prose-slate max-w-none prose-headings:font-serif">
-      {parts.map((p, i) => i % 3 === 0 ? <Fragment set:html={p ?? ''} /> : i % 3 === 1 ? <MiniSim client:load kind={p} arg={decode(parts[i + 1])} href={route('home', lang)} /> : null)}
+      {parts.map((p, i) => i % 3 === 0 ? <Fragment set:html={p ?? ''} /> : i % 3 === 1 ? <div data-chrome><MiniSim client:load kind={p} arg={decode(parts[i + 1])} href={route('home', lang)} /></div> : null)}
     </div>
     <section data-chrome class="mt-10">
       <h2 class="font-serif text-2xl font-bold text-navy-900">Every GSA area in {S.name}: FY2027 against FY2026</h2>
