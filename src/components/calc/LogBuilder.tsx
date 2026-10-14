@@ -32,10 +32,10 @@ export default function LogBuilder({ methodHref }: { methodHref: string }) {
         <thead><tr><th scope="col" className="px-1 py-1 text-left">Date</th><th scope="col" className="px-1 py-1 text-left">Business purpose</th><th scope="col" className="px-1 py-1 text-left">From and to</th><th scope="col" className="px-1 py-1 text-right">Miles</th><th scope="col" className="px-1 py-1 text-right">Value</th><th scope="col" className="sr-only">Remove</th></tr></thead>
         <tbody>{lines.map((l, i) => (
           <tr key={i}>
-            <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-d${i}`}>Date</label><input id={`lg-d${i}`} type="date" min="2025-01-01" max="2026-12-31" value={l.date} onChange={(e) => e.target.value && set(i, 'date', e.target.value)} className={cell} /></td>
-            <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-p${i}`}>Purpose</label><input id={`lg-p${i}`} value={l.purpose} onChange={(e) => set(i, 'purpose', e.target.value)} className={cell} /></td>
-            <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-r${i}`}>From and to</label><input id={`lg-r${i}`} value={l.route} onChange={(e) => set(i, 'route', e.target.value)} className={cell} /></td>
-            <td className="px-1 py-1"><label className="sr-only" htmlFor={`lg-m${i}`}>Miles</label><input id={`lg-m${i}`} inputMode="decimal" value={l.miles ? String(l.miles) : ''} onChange={(e) => set(i, 'miles', e.target.value)} className={`${cell} text-right tabular-nums`} /></td>
+            <td className="px-1 py-1"><input id={`lg-d${i}`} aria-label="Date" type="date" min="2025-01-01" max="2026-12-31" value={l.date} onChange={(e) => e.target.value && set(i, 'date', e.target.value)} className={cell} /></td>
+            <td className="px-1 py-1"><input id={`lg-p${i}`} aria-label="Purpose" value={l.purpose} onChange={(e) => set(i, 'purpose', e.target.value)} className={cell} /></td>
+            <td className="px-1 py-1"><input id={`lg-r${i}`} aria-label="From and to" value={l.route} onChange={(e) => set(i, 'route', e.target.value)} className={cell} /></td>
+            <td className="px-1 py-1"><input id={`lg-m${i}`} aria-label="Miles" inputMode="decimal" value={l.miles ? String(l.miles) : ''} onChange={(e) => set(i, 'miles', e.target.value)} className={`${cell} text-right tabular-nums`} /></td>
             <td className="tabular-nums px-1 py-1 text-right">{usd(l.miles * r(l.date))}</td>
             <td className="px-1 py-1 text-right"><button type="button" onClick={() => setLines((ls) => ls.filter((_, j) => j !== i))} className="rounded border border-navy-300 px-2 py-1 text-xs text-navy-700 hover:bg-navy-50" aria-label={`Remove line ${i + 1}`}>Remove</button></td>
           </tr>))}</tbody>

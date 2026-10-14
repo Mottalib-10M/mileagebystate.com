@@ -44,7 +44,7 @@ export default function RatesLookup({ d27 = -1, d26 = -1, label = 'Standard CONU
 
   return (
     <div className="rechner rounded-xl border border-navy-200 bg-white p-4 sm:p-6">
-      <form className="grid gap-x-5 gap-y-4 sm:grid-cols-[1fr_auto]" onSubmit={(e) => e.preventDefault()}>
+      <form className="grid content-start gap-x-5 gap-y-4 sm:grid-cols-[1fr_auto]" onSubmit={(e) => e.preventDefault()}>
         <div className="relative grid grid-rows-subgrid row-span-3 content-start gap-y-0">
           <label htmlFor={`${p}-q`} className="mb-1 block text-sm font-medium text-navy-700">City, county, GSA area or ZIP code</label>
           <input id={`${p}-q`} type="text" role="combobox" aria-autocomplete="list" aria-expanded={hits.length > 0} autoComplete="off" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={pick.label}
